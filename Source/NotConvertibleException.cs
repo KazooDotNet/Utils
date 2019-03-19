@@ -7,6 +7,7 @@ namespace KazooDotNet.Utils
     {
         public object Object { get; set; }
         public PropertyInfo Property { get; set; }
+        public int? Index { get; set; }
 
         public NotConvertibleException()
         {

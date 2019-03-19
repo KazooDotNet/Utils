@@ -24,7 +24,7 @@ namespace Tests
                     ["Int"] = "3",
                     ["IntArray"] = new[] { "1", "2", "3"}
                 }
-                ["SubPocos"] = new NestedDictionary[]
+                ["SubPocos"] = new[]
                 {
                     new NestedDictionary
                     {

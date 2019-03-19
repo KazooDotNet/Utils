@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace KazooDotNet.Utils.Assigners
 {
-    public class ArrayAssigner : IAssignerTransformer
+    public class ArrayAssigner : IterableAssigner, IAssignerTransformer
     {
         public string Id => "ArrayAssigner";
         public (bool, object) Transform(Type targetType, object obj)
@@ -13,7 +13,7 @@ namespace KazooDotNet.Utils.Assigners
             if (!targetType.IsArray)
                 return (false, null);
             var eleType = targetType.GetElementType();
-            if (eleType?.GetConstructor(Type.EmptyTypes) == null || eleType.IsAbstract)
+            if (!CanCreate(eleType))
                 return (false, null);
             
             switch (obj)
@@ -37,19 +37,6 @@ namespace KazooDotNet.Utils.Assigners
                 default:
                     return (false, null);
             }
-        }
-        
-
-        private object ConvertValue(object value, Type toType, object obj, int index)
-        {
-            var (success, converted) = Assigner.Convert(value, toType);
-            if (!success)
-                throw new NotConvertibleException($"Cannot convert {value.GetType().Name} to {toType.Name}")
-                {
-                    Object = obj,
-                    Index = index
-                };
-            return converted;
         }
     }
 }

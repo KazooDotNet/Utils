@@ -4,25 +4,21 @@ using System.Collections.Generic;
 
 namespace KazooDotNet.Utils.Assigners
 {
-    public class EnumerableAssigner : IAssignerTransformer
+    public class EnumerableAssigner : IterableAssigner, IAssignerTransformer
     {
         public string Id => "EnumerableAssigner";
         public (bool, object) Transform(Type targetType, object obj)
         {
-            if (!typeof(IEnumerable).IsAssignableFrom(targetType) || !(obj is Dictionary<string, object>[] aDict))
+            if (!typeof(IEnumerable).IsAssignableFrom(targetType) || !(obj is IEnumerable e))
                 return (false, null);
             var eleType = targetType.GetGenericArguments()[0];
-            if (eleType.GetConstructor(Type.EmptyTypes) == null || eleType.IsAbstract)
+            if (!CanCreate(eleType))
                 return (false, null);
-            var listType = typeof(List<>).MakeGenericType(eleType);
-            // TODO: make list specific size?
-            var l = (IList) Activator.CreateInstance(listType);
-            foreach (var ad in aDict)
-            {
-                var arrayEle = Activator.CreateInstance(eleType);
-                arrayEle.Assign(ad);
-                l.Add(arrayEle);
-            }
+            var typedList = typeof(List<>).MakeGenericType(eleType);
+            var l = (IList) Activator.CreateInstance(typedList);
+            var i = 0;
+            foreach (var ev in e)
+                l.Add(ConvertValue(ev, eleType, obj, i++));
             return (true, l);
         }
     }

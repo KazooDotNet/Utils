@@ -49,10 +49,10 @@ namespace KazooDotNet.Utils
                     property.SetValue(obj, null);
                     continue;
                 }
-                var (found, converted) = Convert(value, property.GetType());
+                var (found, converted) = Convert(value, property.PropertyType);
                 if (!found)
                     throw new NotConvertibleException(
-                        $"Could not convert property `{key}` to `{property.PropertyType.FullName} from value {value}({value.GetType().FullName})")
+                        $"Could not convert property `{key}` to `{property.PropertyType.Name} from value {value}({value.GetType().FullName})")
                     {
                         Object = obj,
                         Property = property

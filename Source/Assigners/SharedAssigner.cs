@@ -2,7 +2,7 @@ using System;
 
 namespace KazooDotNet.Utils.Assigners
 {
-    public abstract class IterableAssigner
+    public abstract class SharedAssigner
     {
         protected object ConvertValue(object value, Type toType, object obj, int index)
         {
@@ -19,6 +19,6 @@ namespace KazooDotNet.Utils.Assigners
         protected bool CanCreate(Type type) =>
             !(type?.IsAbstract ?? true) && (
                 typeof(IConvertible).IsAssignableFrom(type) ||
-                type.GetConstructor(Type.EmptyTypes) == null);
+                type.GetConstructor(Type.EmptyTypes) != null);
     }
 }

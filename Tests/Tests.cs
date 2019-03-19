@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using KazooDotNet.Utils;
 using Xunit;
 
@@ -23,7 +24,7 @@ namespace Tests
                 {
                     ["Int"] = "3",
                     ["IntArray"] = new[] { "1", "2", "3"}
-                }
+                },
                 ["SubPocos"] = new[]
                 {
                     new NestedDictionary
@@ -44,6 +45,13 @@ namespace Tests
             var poco = new Poco();
             poco.Assign(dict);
             Assert.Equal(DateTime.Parse(dict["time"].ToString()), poco.Time);
+            Assert.Equal("asdf", poco.String);
+            Assert.Equal(123, poco.Int);
+            Assert.Equal(123.52m, poco.Decimal);
+            // TODO: list/array checking
+            Assert.Equal(3, poco.SubPoco.Int);
+            Assert.Equal(3, poco.SubPocos.First().Int);
+            Assert.Equal(4, poco.SubPocos.Skip(1).First().Int);
             
         }
     }

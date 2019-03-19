@@ -4,12 +4,13 @@ using System.Collections.Generic;
 
 namespace KazooDotNet.Utils.Assigners
 {
-    public class EnumerableAssigner : IterableAssigner, IAssignerTransformer
+    public class EnumerableAssigner : SharedAssigner, IAssignerTransformer
     {
         public string Id => "EnumerableAssigner";
         public (bool, object) Transform(Type targetType, object obj)
         {
-            if (!typeof(IEnumerable).IsAssignableFrom(targetType) || !(obj is IEnumerable e))
+            var e = obj as IEnumerable;
+            if ((!targetType.IsArray && !typeof(IEnumerable).IsAssignableFrom(targetType)) || e == null)
                 return (false, null);
             var eleType = targetType.GetGenericArguments()[0];
             if (!CanCreate(eleType))

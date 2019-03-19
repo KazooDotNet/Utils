@@ -44,15 +44,15 @@ namespace KazooDotNet.Utils
                 if (whitelist.Length > 0 && !whitelist.Contains(key) || property == null)
                     continue;
                 var value = dict[dKey];
-                if (value == null)
+                if (value == null || value.GetType() == property.PropertyType)
                 {
-                    property.SetValue(obj, null);
+                    property.SetValue(obj, value);
                     continue;
                 }
                 var (found, converted) = Convert(value, property.PropertyType);
                 if (!found)
                     throw new NotConvertibleException(
-                        $"Could not convert property `{key}` to `{property.PropertyType.Name} from value {value}({value.GetType().FullName})")
+                        $"Could not convert property `{key}` to `{property.PropertyType.Name} from value {value}({value.GetType().Name})")
                     {
                         Object = obj,
                         Property = property

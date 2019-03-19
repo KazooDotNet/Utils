@@ -19,6 +19,6 @@ namespace Tests
     public class SubPoco
     {
         public int Int { get; set; }
-        public int IntArray { get; set; }
+        public int[] IntArray { get; set; }
     }
 }

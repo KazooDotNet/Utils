@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace KazooDotNet.Utils.Assigners
 {
-    public class ArrayAssigner : IterableAssigner, IAssignerTransformer
+    public class ArrayAssigner : SharedAssigner, IAssignerTransformer
     {
         public string Id => "ArrayAssigner";
         public (bool, object) Transform(Type targetType, object obj)

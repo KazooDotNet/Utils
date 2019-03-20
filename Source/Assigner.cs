@@ -52,7 +52,7 @@ namespace KazooDotNet.Utils
                 var (found, converted) = Convert(value, property.PropertyType);
                 if (!found)
                     throw new NotConvertibleException(
-                        $"Could not convert property `{key}` to `{property.PropertyType.Name} from value {value}({value.GetType().Name})")
+                        $"Could not convert property `{key}` to type `{property.PropertyType.Name}` from value `{value}` ({value.GetType().Name})")
                     {
                         Object = obj,
                         Property = property

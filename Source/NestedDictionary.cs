@@ -64,7 +64,7 @@ namespace KazooDotNet.Utils
 			}
 		}
 
-		public void Set(string key, dynamic value)
+		public void Set(string key, object value)
 		{
 			var leaf = GetLeaf(key);
 			leaf[LeafKey(key)] = value;

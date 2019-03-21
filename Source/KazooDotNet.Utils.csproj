@@ -4,5 +4,15 @@
         <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>latest</LangVersion>
     </PropertyGroup>
-
+    <PropertyGroup>
+        <PackageId>KazooDotNet.Utils</PackageId>
+        <Title>KazooDotNet's General Utilities</Title>
+        <VersionPrefix>0.1.0.1</VersionPrefix>
+        <VersionSuffix />
+        <PackageProjectUrl>https://github.com/KazooDotNet/Utils</PackageProjectUrl>
+        <Description>General utilities and convenience classes.</Description>
+        <PackageTags></PackageTags>
+        <Copyright>Copyright 2018-2019 Jeremy Nicoll - MIT</Copyright>
+        <IncludeSource>true</IncludeSource>
+    </PropertyGroup>
 </Project>

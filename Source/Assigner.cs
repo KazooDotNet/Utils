@@ -64,7 +64,10 @@ namespace KazooDotNet.Utils
 
         public static (bool, object) Convert(object value, Type toType)
         {
-            var type = Nullable.GetUnderlyingType(toType) ?? toType;
+            var nullableType = Nullable.GetUnderlyingType(toType); 
+            var type = nullableType ?? toType;
+            if (nullableType != null && string.IsNullOrWhiteSpace(value.ToString()))
+                return (true, null);
             if (type == value.GetType())
                 return (true, value);
             foreach (var trans in Transformers.Values)

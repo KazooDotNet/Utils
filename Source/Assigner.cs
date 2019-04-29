@@ -66,7 +66,7 @@ namespace KazooDotNet.Utils
         {
             var nullableType = Nullable.GetUnderlyingType(toType); 
             var type = nullableType ?? toType;
-            if (nullableType != null && string.IsNullOrWhiteSpace(value.ToString()))
+            if ( (nullableType != null || type.IsValueType) && string.IsNullOrWhiteSpace(value.ToString()))
                 return (true, null);
             if (type == value.GetType())
                 return (true, value);

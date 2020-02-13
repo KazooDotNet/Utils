@@ -9,10 +9,14 @@ namespace KazooDotNet.Utils.Assigners
         public (bool, object) Transform(Type targetType, object obj)
         {
             
-            if (targetType.GetConstructor(Type.EmptyTypes) == null || targetType.IsAbstract || !(obj is IDictionary<string,object> dict))
+            if (targetType.GetConstructor(Type.EmptyTypes) == null || targetType.IsAbstract || !(obj is IDictionary<string,object> || obj is IEnumerable<KeyValuePair<string,object>>))
                 return (false, null);
             var ret = Activator.CreateInstance(targetType);
-            ret.Assign(dict);
+            
+            if (obj is IDictionary<string,object> dict)
+                ret.Assign(dict);
+            else if (obj is IEnumerable<KeyValuePair<string, object>> kvps)
+                ret.Assign(kvps);
             return (true, ret);
         }
     }

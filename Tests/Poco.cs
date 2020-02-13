@@ -13,7 +13,9 @@ namespace Tests
         public string[] StringArray { get; set; }
         public List<string> StringList { get; set; }
         public SubPoco SubPoco { get; set; }
+        public SubPoco SubPoco2 { get; set; }
         public ICollection<SubPoco> SubPocos { get; set; }
+        public ICollection<SubPoco> SubPocos2 { get; set; }
     }
 
     public class SubPoco

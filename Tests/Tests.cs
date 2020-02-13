@@ -13,16 +13,21 @@ namespace Tests
         {
             var dict = new NestedDictionary
             {
-                ["unknownField"] = "3",
+                ["unknownField"] = 3,
                 ["time"] = "2018-10-31",
                 ["String"] = "asdf",
                 ["Int"] = "123",
                 ["Decimal"] = "123.52",
                 ["StringArray"] = new List<string> { "a", "b", "cde"},
                 ["StringList"] = new[] { "a", "b", "cde"},
+                ["SubPoco2"] = new List<KeyValuePair<string, object>>
+                {
+                      new KeyValuePair<string, object>("Int", 3),
+                      new KeyValuePair<string, object>("IntArray", new[] { "1", "2", "3"})
+                },
                 ["SubPoco"] = new NestedDictionary
                 {
-                    ["Int"] = "3",
+                    ["Int"] = 3,
                     ["IntArray"] = new[] { "1", "2", "3"}
                 },
                 ["SubPocos"] = new[]
@@ -31,13 +36,21 @@ namespace Tests
                     {
                         
                         ["int"] = "3",
-                        ["IntArray"] = new[] { "1", "2", "3"}
+                        ["IntArray"] = new[] { 1, 2, 3}
                     },
                     new NestedDictionary
                     {
                         
                         ["Int"] = "4",
                         ["intArray"] = new[] { "1", "2", "3", "4"}
+                    }
+                },
+                ["SubPocos2"] = new List<KeyValuePair<string,object>>[]
+                {
+                    new List<KeyValuePair<string,object>>
+                    {
+                        new KeyValuePair<string, object>("Int", 3),
+                        new KeyValuePair<string, object>("IntArray", new[] { "1", "2", "3"})
                     }
                 }
             };

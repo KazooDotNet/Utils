@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using KazooDotNet.Utils.Assigners;
 
@@ -34,16 +35,23 @@ namespace KazooDotNet.Utils
         
         public static object Assign(this object obj, IDictionary<string, object> dict, params string[] whitelist)
 		{
-			if (dict == null) return obj;
+			return Assign(obj, dict?.ToList(), whitelist);
+		}
+
+        public static object Assign(this object obj, IEnumerable<KeyValuePair<string, object>> keyValuePairs,
+            params string[] whitelist)
+        {
+            if (keyValuePairs == null) 
+                return obj;
             var objType = obj.GetType();
-            foreach (var dKey in dict.Keys)
+            foreach (var pair in keyValuePairs)
             {
                 // TODO: Check for underscore variables? Custom key transformers?
-                var key = char.ToUpper(dKey[0]) + dKey.Substring(1);
+                var key = char.ToUpper(pair.Key[0]) + pair.Key.Substring(1);
                 var property = objType.GetProperty(key);
                 if (whitelist.Length > 0 && !whitelist.Contains(key) || property == null)
                     continue;
-                var value = dict[dKey];
+                var value = pair.Value;
                 if (value == null || value.GetType() == property.PropertyType)
                 {
                     property.SetValue(obj, value);
@@ -60,7 +68,7 @@ namespace KazooDotNet.Utils
                 property.SetValue(obj, converted);
             }
             return obj;
-		}
+        }
 
         public static (bool, object) Convert(object value, Type toType)
         {
